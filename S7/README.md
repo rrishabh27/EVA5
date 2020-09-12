@@ -38,7 +38,7 @@ After training the whole network for 35 epochs, we got:
   
   **Train and Test Metrics:**
   
-  ![Metrics]()
+  ![Metrics](https://github.com/rishabh-bhardwaj-64rr/EVA5/blob/master/S7/images/metrics.png)
   
   ## Group Members:
   **RISHABH BHARDWAJ**
