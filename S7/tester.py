@@ -24,12 +24,12 @@ def test(net, device, test_loader, test_acc, test_losses):
             correct += pred.eq(target.view_as(pred)).sum().item()
 
     test_loss /= len(test_loader.dataset)
-    test_losses.extend(test_loss)
+    test_losses.append(test_loss)
 
     print('\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.2f}%)\n'.format(
         test_loss, correct, len(test_loader.dataset),
         100. * correct / len(test_loader.dataset)))
     
-    test_acc.extend(100. * correct / len(test_loader.dataset))
+    test_acc.append(100. * correct / len(test_loader.dataset))
 
     # return test_acc, test_losses
