@@ -18,10 +18,10 @@ given it has no additional cost during training.**
 
 **Validation Accuracy and Validation Losses:**
 
-![Val Acc]()
+![Val Acc](https://github.com/rishabh-bhardwaj-64rr/EVA5/blob/master/S6/images/Val_acc.png)
 
-![Val Losses]()
+![Val Losses](https://github.com/rishabh-bhardwaj-64rr/EVA5/blob/master/S6/images/Val_losses.png)
 
 **25 misclassified images by using GBN**
 
-![25 miss GBN]()
+![25 miss GBN](https://github.com/rishabh-bhardwaj-64rr/EVA5/blob/master/S6/images/25%20miss%20GBN.png)
