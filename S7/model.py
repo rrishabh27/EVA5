@@ -1,23 +1,25 @@
 import torch.nn as nn
 import torch.nn.functional as F
 
+import normalisation as norm
+
 dropout_value = 0.07
 num_splits = 2
 
-class Net(nn.Module):
+class Cifar10_Net(nn.Module):
     def __init__(self, norm_type = 'BN'):
-        super(Net, self).__init__()
+        super(Cifar10_Net, self).__init__()
 
         self.conv1 = nn.Sequential(
             nn.Conv2d(in_channels=3, out_channels=32, kernel_size=3, padding=1),
-            nn.BatchNorm2d(32) if norm_type == 'BN' else GBN(num_features=32, num_splits=num_splits),
+            nn.BatchNorm2d(32) if norm_type == 'BN' else norm.GBN(num_features=32, num_splits=num_splits),
             nn.Dropout(dropout_value),
             nn.ReLU() 
         ) # output_size = 26
 
         self.conv2 = nn.Sequential(
             nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3, padding=1),
-            nn.BatchNorm2d(64) if norm_type == 'BN' else GBN(num_features=64, num_splits=num_splits),
+            nn.BatchNorm2d(64) if norm_type == 'BN' else norm.GBN(num_features=64, num_splits=num_splits),
             nn.Dropout(dropout_value),
             nn.ReLU() 
         ) # output_size = 24
@@ -26,7 +28,7 @@ class Net(nn.Module):
         self.conv_1_1 = nn.Sequential(
             nn.Conv2d(in_channels=64, out_channels=32, kernel_size=1), 
             nn.MaxPool2d(2, 2),
-            nn.BatchNorm2d(32) if norm_type == 'BN' else GBN(num_features=32, num_splits=num_splits),
+            nn.BatchNorm2d(32) if norm_type == 'BN' else norm.GBN(num_features=32, num_splits=num_splits),
             nn.Dropout(dropout_value),
             nn.ReLU()
         ) # output_size = 12
@@ -34,14 +36,14 @@ class Net(nn.Module):
 
         self.conv3 = nn.Sequential(
             nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3, padding=1),
-            nn.BatchNorm2d(64) if norm_type == 'BN' else GBN(num_features=64, num_splits=num_splits),
+            nn.BatchNorm2d(64) if norm_type == 'BN' else norm.GBN(num_features=64, num_splits=num_splits),
             nn.Dropout(dropout_value),
             nn.ReLU()
         ) # output_size = 10
 
         self.conv4 = nn.Sequential(
             nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3, padding = 1),
-            nn.BatchNorm2d(128) if norm_type == 'BN' else GBN(num_features=128, num_splits=num_splits),
+            nn.BatchNorm2d(128) if norm_type == 'BN' else norm.GBN(num_features=128, num_splits=num_splits),
             nn.Dropout(dropout_value),
             nn.ReLU()
         ) # output_size = 8
@@ -49,7 +51,7 @@ class Net(nn.Module):
         
         # self.conv5 = nn.Sequential(
         #     nn.Conv2d(in_channels=16, out_channels=16, kernel_size=1), 
-        #     nn.BatchNorm2d(20) if norm_type == 'BN' else GBN(num_features=16, num_splits=num_splits),
+        #     nn.BatchNorm2d(20) if norm_type == 'BN' else norm.GBN(num_features=16, num_splits=num_splits),
         #     nn.Dropout(dropout_value),
         #     nn.ReLU()
         # )
@@ -58,7 +60,7 @@ class Net(nn.Module):
         self.conv_1_2 = nn.Sequential(
             nn.Conv2d(in_channels=128, out_channels=32, kernel_size=1), 
             nn.MaxPool2d(2, 2),
-            nn.BatchNorm2d(32) if norm_type == 'BN' else GBN(num_features=32, num_splits=num_splits),
+            nn.BatchNorm2d(32) if norm_type == 'BN' else norm.GBN(num_features=32, num_splits=num_splits),
             nn.Dropout(dropout_value),
             nn.ReLU()
         ) # output_size = 12
@@ -67,14 +69,14 @@ class Net(nn.Module):
         # DILATED CONVOLUTION
         self.conv5_dilated = nn.Sequential(
             nn.Conv2d(in_channels=32, out_channels=64, kernel_size=1, padding = 0, dilation = 2),  # preserves resolution
-            nn.BatchNorm2d(64) if norm_type == 'BN' else GBN(num_features=64, num_splits=num_splits),
+            nn.BatchNorm2d(64) if norm_type == 'BN' else norm.GBN(num_features=64, num_splits=num_splits),
             nn.Dropout(dropout_value),
             nn.ReLU()
         )
 
         self.conv6 = nn.Sequential(
             nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3, padding = 1), 
-            nn.BatchNorm2d(128) if norm_type == 'BN' else GBN(num_features=128, num_splits=num_splits),
+            nn.BatchNorm2d(128) if norm_type == 'BN' else norm.GBN(num_features=128, num_splits=num_splits),
             nn.Dropout(dropout_value),
             nn.ReLU()
         ) # output_size = 6
@@ -82,7 +84,7 @@ class Net(nn.Module):
         self.conv_1_3 = nn.Sequential(
             nn.Conv2d(in_channels=128, out_channels=32, kernel_size=1), 
             # nn.MaxPool2d(2, 2),
-            nn.BatchNorm2d(32) if norm_type == 'BN' else GBN(num_features=32, num_splits=num_splits),
+            nn.BatchNorm2d(32) if norm_type == 'BN' else norm.GBN(num_features=32, num_splits=num_splits),
             nn.Dropout(dropout_value),
             nn.ReLU()
         ) # output_size = 12
@@ -90,7 +92,7 @@ class Net(nn.Module):
 
         self.conv7 = nn.Sequential(
             nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3, padding = 1),
-            nn.BatchNorm2d(64) if norm_type == 'BN' else GBN(num_features=64, num_splits=num_splits),
+            nn.BatchNorm2d(64) if norm_type == 'BN' else norm.GBN(num_features=64, num_splits=num_splits),
             nn.Dropout(dropout_value),
             nn.ReLU()
         ) # output_size = 6( padding = 1)
@@ -99,21 +101,21 @@ class Net(nn.Module):
         self.conv8_ds = nn.Sequential(
             nn.Conv2d(in_channels=64, out_channels=64, kernel_size=3, padding = 1, groups = 64),
             nn.Conv2d(in_channels=64, out_channels=64, kernel_size=1),
-            nn.BatchNorm2d(64) if norm_type == 'BN' else GBN(num_features=64, num_splits=num_splits),
+            nn.BatchNorm2d(64) if norm_type == 'BN' else norm.GBN(num_features=64, num_splits=num_splits),
             nn.Dropout(dropout_value),
             nn.ReLU()
         ) # output_size = 6( padding = 1)
 
         self.conv9 = nn.Sequential(
             nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3, padding = 1),
-            nn.BatchNorm2d(128) if norm_type == 'BN' else GBN(num_features=128, num_splits=num_splits),
+            nn.BatchNorm2d(128) if norm_type == 'BN' else norm.GBN(num_features=128, num_splits=num_splits),
             nn.Dropout(dropout_value),
             nn.ReLU()
         ) # output_size = 6( padding = 1)
 
         self.conv10 = nn.Sequential(
             nn.Conv2d(in_channels=128, out_channels=128, kernel_size=3, padding = 0),
-            nn.BatchNorm2d(128) if norm_type == 'BN' else GBN(num_features=128, num_splits=num_splits),
+            nn.BatchNorm2d(128) if norm_type == 'BN' else norm.GBN(num_features=128, num_splits=num_splits),
             nn.Dropout(dropout_value),
             nn.ReLU()
         ) # output_size = 6( padding = 1)
@@ -125,7 +127,7 @@ class Net(nn.Module):
         # final FC layer (read fully convolutional, not fully connected)
         self.conv11 = nn.Sequential(
             nn.Conv2d(in_channels=128, out_channels=64, kernel_size=1),
-            nn.BatchNorm2d(64) if norm_type == 'BN' else GBN(num_features=64, num_splits=num_splits),
+            nn.BatchNorm2d(64) if norm_type == 'BN' else norm.GBN(num_features=64, num_splits=num_splits),
             nn.Dropout(dropout_value),
             nn.ReLU()
         )
