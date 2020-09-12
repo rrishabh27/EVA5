@@ -1,6 +1,3 @@
-import torch.nn as nn
-import torch.nn.functional as F
-
 class Cifar10_Net(nn.Module):
     
     def __init__(self, norm_type = 'BN'):
