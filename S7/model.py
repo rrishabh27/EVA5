@@ -15,14 +15,14 @@ class Cifar10_Net(nn.Module):
             nn.BatchNorm2d(32) if norm_type == 'BN' else norm.GBN(num_features=32, num_splits=num_splits),
             nn.Dropout(dropout_value),
             nn.ReLU() 
-        ) # output_size = 26
+        )
 
         self.conv2 = nn.Sequential(
             nn.Conv2d(in_channels=32, out_channels=64, kernel_size=3, padding=1),
             nn.BatchNorm2d(64) if norm_type == 'BN' else norm.GBN(num_features=64, num_splits=num_splits),
             nn.Dropout(dropout_value),
             nn.ReLU() 
-        ) # output_size = 24
+        )
 
         # transition block 
         self.conv_1_1 = nn.Sequential(
@@ -31,7 +31,7 @@ class Cifar10_Net(nn.Module):
             nn.BatchNorm2d(32) if norm_type == 'BN' else norm.GBN(num_features=32, num_splits=num_splits),
             nn.Dropout(dropout_value),
             nn.ReLU()
-        ) # output_size = 12
+        )
         # end
 
         self.conv3 = nn.Sequential(
@@ -39,14 +39,14 @@ class Cifar10_Net(nn.Module):
             nn.BatchNorm2d(64) if norm_type == 'BN' else norm.GBN(num_features=64, num_splits=num_splits),
             nn.Dropout(dropout_value),
             nn.ReLU()
-        ) # output_size = 10
+        )
 
         self.conv4 = nn.Sequential(
             nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3, padding = 1),
             nn.BatchNorm2d(128) if norm_type == 'BN' else norm.GBN(num_features=128, num_splits=num_splits),
             nn.Dropout(dropout_value),
             nn.ReLU()
-        ) # output_size = 8
+        )
 
         
         # self.conv5 = nn.Sequential(
@@ -63,7 +63,7 @@ class Cifar10_Net(nn.Module):
             nn.BatchNorm2d(32) if norm_type == 'BN' else norm.GBN(num_features=32, num_splits=num_splits),
             nn.Dropout(dropout_value),
             nn.ReLU()
-        ) # output_size = 12
+        )
         # end
         
         # DILATED CONVOLUTION
@@ -79,15 +79,16 @@ class Cifar10_Net(nn.Module):
             nn.BatchNorm2d(128) if norm_type == 'BN' else norm.GBN(num_features=128, num_splits=num_splits),
             nn.Dropout(dropout_value),
             nn.ReLU()
-        ) # output_size = 6
-
+        )
+        
+        # transition block
         self.conv_1_3 = nn.Sequential(
             nn.Conv2d(in_channels=128, out_channels=32, kernel_size=1), 
             # nn.MaxPool2d(2, 2),
             nn.BatchNorm2d(32) if norm_type == 'BN' else norm.GBN(num_features=32, num_splits=num_splits),
             nn.Dropout(dropout_value),
             nn.ReLU()
-        ) # output_size = 12
+        ) 
         # end
 
         self.conv7 = nn.Sequential(
@@ -95,7 +96,7 @@ class Cifar10_Net(nn.Module):
             nn.BatchNorm2d(64) if norm_type == 'BN' else norm.GBN(num_features=64, num_splits=num_splits),
             nn.Dropout(dropout_value),
             nn.ReLU()
-        ) # output_size = 6( padding = 1)
+        )
 
         # depthwise separable convolution
         self.conv8_ds = nn.Sequential(
@@ -104,21 +105,21 @@ class Cifar10_Net(nn.Module):
             nn.BatchNorm2d(64) if norm_type == 'BN' else norm.GBN(num_features=64, num_splits=num_splits),
             nn.Dropout(dropout_value),
             nn.ReLU()
-        ) # output_size = 6( padding = 1)
+        )
 
         self.conv9 = nn.Sequential(
             nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3, padding = 1),
             nn.BatchNorm2d(128) if norm_type == 'BN' else norm.GBN(num_features=128, num_splits=num_splits),
             nn.Dropout(dropout_value),
             nn.ReLU()
-        ) # output_size = 6( padding = 1)
+        )
 
         self.conv10 = nn.Sequential(
             nn.Conv2d(in_channels=128, out_channels=128, kernel_size=3, padding = 0),
             nn.BatchNorm2d(128) if norm_type == 'BN' else norm.GBN(num_features=128, num_splits=num_splits),
             nn.Dropout(dropout_value),
             nn.ReLU()
-        ) # output_size = 6( padding = 1)
+        )
 
         self.gap = nn.Sequential(
             nn.AvgPool2d(kernel_size = 6)
