@@ -21,8 +21,9 @@ After training the whole network for 35 epochs, we got:
 * 84.70% train accuracy
 * 82.61% validation accuracy(highest among all the epochs)
 * 453,738 total parameters
+* Receptive Field of 72
 * The model is underfitting
-* One key takeaway is that the this model can reach better accuracy if trained for some more epochs
+* One takeaway is that this model can reach better accuracy if trained for some more epochs
 
 **Classwise Accuracy:**
   * Accuracy of plane : 93 %
