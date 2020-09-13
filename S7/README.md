@@ -1,10 +1,10 @@
 # SESSION 7
 
-The CIFAR-10 dataset contains 60,000 32x32 color images in 10 different classes. The 10 different classes represent airplanes, cars, birds, cats, deer, dogs, frogs, horses, ships, and trucks. There are 6,000 images of each class.
+The [CIFAR-10](https://www.cs.toronto.edu/~kriz/cifar.html) dataset contains 60,000 32x32 color images in 10 different classes. The 10 different classes represent airplanes, cars, birds, cats, deer, dogs, frogs, horses, ships, and trucks. There are 6,000 images of each class.
 
-![CIFAR10 IMAGES](https://storage.googleapis.com/kaggle-competitions/kaggle/3649/media/cifar-10.png)
+![CIFAR-10 IMAGES](https://storage.googleapis.com/kaggle-competitions/kaggle/3649/media/cifar-10.png)
 
-In this code, we needed to train on [CIFAR10](https://www.cs.toronto.edu/~kriz/cifar.html) dataset with these constraints:
+In this code, we needed to train on the above dataset with these constraints:
 
 * 80% accuracy with less than 1M parameters
 * No restriction on number of epochs
