@@ -16,7 +16,7 @@ In this code, we needed to train on [CIFAR10](https://www.cs.toronto.edu/~kriz/c
 
 ---
 
-After training the whole network for 35 epochs, we got:
+After training the whole [network](https://github.com/rishabh-bhardwaj-64rr/EVA5/blob/master/S7/model.py) for 35 epochs, we got:
 
 * 84.70% train accuracy
 * 82.61% validation accuracy(highest among all the epochs)
@@ -24,6 +24,13 @@ After training the whole network for 35 epochs, we got:
 * Receptive Field of 72
 * The model is underfitting
 * One takeaway is that this model can reach better accuracy if trained for some more epochs
+
+**Parameters and Hyperparameters**
+* Loss function : Cross Entropy Loss
+* Optimizer : SGD(learning_rate = 0.001, momentum = 0.9)
+* Batch Size : 128
+* Epochs : 35
+* Dropout Value : 0.07
 
 **Classwise Accuracy:**
   * Accuracy of plane : 93 %
