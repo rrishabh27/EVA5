@@ -22,7 +22,7 @@ After training the whole [network](https://github.com/rishabh-bhardwaj-64rr/EVA5
 * 82.61% validation accuracy(highest among all the epochs)
 * 453,738 total parameters
 * Receptive Field of 72
-* The model is underfitting
+* The model is overfitting
 * One takeaway is that this model can reach better accuracy if trained for some more epochs
 
 **Parameters and Hyperparameters**
