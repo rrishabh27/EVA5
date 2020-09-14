@@ -1,5 +1,5 @@
 import torch
-import dataset
+# import dataset
 
 def cifar10_dataloader(trainset, testset, batch_size = 128, num_workers = 4):
     SEED = 1

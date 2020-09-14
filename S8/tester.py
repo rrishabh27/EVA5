@@ -1,7 +1,7 @@
 import torch
 import torch.functional as F
 
-import model
+# import model
 import loss_functions
 
 def test(net, device, test_loader, test_acc, test_losses):

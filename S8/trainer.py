@@ -5,7 +5,7 @@ import torch.nn.functional as F
 import torch.optim as optim
 from tqdm import tqdm
 
-import model
+# import model
 import loss_functions
 
 def train(net, device, train_loader, optimizer, epoch, train_acc, train_losses):

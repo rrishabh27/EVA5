@@ -1,7 +1,7 @@
 import torch.optim as optim
 from torch.optim.lr_scheduler import StepLR
 
-import model, trainer, tester
+import trainer, tester
 
 
 

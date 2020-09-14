@@ -1,5 +1,5 @@
 from torchvision import datasets
-import transform
+# import transform
 
 def cifar10_dataset(train_transforms, test_transforms):
     
