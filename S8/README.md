@@ -40,5 +40,13 @@ Since the ResNet-18 network has a large number of parameters (11 million), we ca
 * Accuracy of  ship : 92 %
 * Accuracy of truck : 96 %
 
+---
+
+## Group Members
+
+**Rishabh Bhardwaj**
+
+**Rashu Tyagi**
+
 
 
