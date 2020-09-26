@@ -15,7 +15,7 @@ def train(net, device, train_loader, optimizer, epoch, train_acc, train_losses):
     correct = 0
     processed = 0
 
-    for batch_idx, (data, target) in enumerate(pbar):
+    for batch_idx, (data, target) in enumerate(pbar, 0):
         data, target = data.to(device), target.to(device)
         # print(data.shape, target.shape)
         
