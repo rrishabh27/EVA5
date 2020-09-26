@@ -5,6 +5,7 @@ import os.path as osp
 
 import click
 import cv2
+import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import seaborn as sns
 import numpy as np
