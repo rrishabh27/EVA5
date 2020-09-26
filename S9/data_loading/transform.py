@@ -1,7 +1,18 @@
 from torchvision import datasets, transforms
 
+import numpy as np
+
 import albumentations as A
 import albumentations.pytorch.transforms as APT
+
+class Albumentation_Transforms:
+    def __init__(self, transforms):
+        self.transforms = transforms
+
+    def __call__(self, img):
+        img = np.array(img)
+
+        return self.transforms(image=img)['image']
 
 
 def cifar10_transforms(mean, std):
@@ -25,13 +36,15 @@ def cifar10_transforms(mean, std):
 def cifar10_albumentations(mean, std):
 
     train_transforms = A.Compose([
-        A.OneOf([
-            A.GridDistortion(distort_limit=(-0.05, 0.05), p=0.5),
-            A.Rotate(limit=(-10, 10), p=0.5)
-        ]),
+#         A.OneOf([
+#             A.GridDistortion(distort_limit=(-0.3, 0.3), p=0.5),
+#             A.Rotate(limit=(-10, 10), p=0.5)
+#         ]),
+        A.GridDistortion(distort_limit=(-0.3, 0.3), p=0.5),
+        A.Rotate(limit=(-10, 10), p=0.5),
         A.HorizontalFlip(p=0.25),
-        A.Normalize(mean=mean, std=std),
-        A.Cutout(num_holes=1),
+        A.Cutout(num_holes=1, max_h_size=12, max_w_size=12),
+        A.Normalize(mean=mean, std=std), # Here, the order of normalization and ToTensor() methods matters. Same goes for test_transforms 
         APT.ToTensor()
 #         APT.ToTensorV2()
     ])
@@ -42,7 +55,7 @@ def cifar10_albumentations(mean, std):
 #         APT.ToTensorV2()
     ])
 
-    return train_transforms, test_transforms
+    return Albumentation_Transforms(train_transforms), Albumentation_Transforms(test_transforms)
 
 class UnNormalize:
     def __init__(self, mean, std):
