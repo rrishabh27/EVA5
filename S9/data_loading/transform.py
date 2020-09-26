@@ -32,12 +32,14 @@ def cifar10_albumentations(mean, std):
         A.HorizontalFlip(p=0.25),
         A.Normalize(mean=mean, std=std),
         A.Cutout(num_holes=1),
-        APT.ToTensorV2()
+        APT.ToTensor()
+#         APT.ToTensorV2()
     ])
 
     test_transforms = A.Compose([
         A.Normalize(mean=mean, std=std),
-        APT.ToTensorV2()
+        APT.ToTensor()
+#         APT.ToTensorV2()
     ])
 
     return train_transforms, test_transforms
