@@ -28,7 +28,7 @@ def cifar10_albumentations(mean, std):
         A.OneOf([
             A.GridDistortion(distort_limit=(-0.05, 0.05), p=0.5),
             A.Rotate(limit=(-10, 10), p=0.5)
-        ], p=0.5),
+        ]),
         A.HorizontalFlip(p=0.25),
         A.Normalize(mean=mean, std=std),
         A.Cutout(num_holes=1),
