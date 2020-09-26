@@ -1,6 +1,7 @@
 
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 
 class QuizDNN(nn.Module):
     def __init__(self):
@@ -96,4 +97,5 @@ class QuizDNN(nn.Module):
             x13 = self.fc(x12)
 
             x13 = x13.view(-1, 10)
-            return x
+            return F.log_softmax(x13, dim=-1)
+#             return x
