@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-import get_grad_cam, unnormalize
+import get_grad_cam
+import data_loading.transform as dt
 
 sns.set()
 
@@ -25,7 +26,7 @@ def plot_gradcam(model, device, test_loader, classes, target_layers, mean, std):
         classes, data, target, target_layers)
 
         # get the denormalization function
-        unorm = unnormalize.UnNormalize(mean, std)
+        unorm = dt.UnNormalize(mean, std)
 
         get_grad_cam.plot_gradcam(gcam_layers, data, target, predicted_classes,
                      classes, unorm)
