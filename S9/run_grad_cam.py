@@ -6,7 +6,7 @@ import get_grad_cam, unnormalize
 sns.set()
 
 
-def plot_gradcam(model, device, test_loader, classes, target_layers):
+def plot_gradcam(model, device, test_loader, classes, target_layers, mean, std):
         plt.style.use("dark_background")
         # logger.info('Plotting Grad-CAM...')
 
