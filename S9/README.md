@@ -44,6 +44,11 @@ This is a significant improvement from the S8 code.
 * Accuracy of  ship : 89 %
 * Accuracy of truck : 96 %
 ---
+
+**Grad-CAM output for the final layer of ResNet18**
+![gradcam_output](https://github.com/rishabh-bhardwaj-64rr/EVA5/blob/master/S9/images/gradcam_output.png)
+
+---
 ## Group Members
 
 Rishabh Bhardwaj
