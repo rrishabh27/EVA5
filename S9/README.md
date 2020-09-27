@@ -46,6 +46,7 @@ This is a significant improvement from the S8 code.
 ---
 
 **Grad-CAM output for the final layer of ResNet18**
+
 ![gradcam_output](https://github.com/rishabh-bhardwaj-64rr/EVA5/blob/master/S9/images/gradcam_output.png)
 
 ---
