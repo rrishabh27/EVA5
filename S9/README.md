@@ -26,7 +26,7 @@ This is a significant improvement from the S8 code.
 **Parameters and Hyperparameters**
 
 * Loss function : Cross Entropy Loss
-* Optimizer : SGD(learning_rate = 0.005, momentum = 0.9)
+* Optimizer : `SGD(learning_rate = 0.01, momentum = 0.9)`
 * Batch Size : 128
 * Epochs : 25
 ---
