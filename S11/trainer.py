@@ -41,8 +41,16 @@ def train(net, device, train_loader, optimizer, scheduler, epoch, train_acc, tra
         pbar.set_description(desc = f'Loss = {loss.item()} Batch_id = {batch_idx} Accuracy = {100. * correct / processed:0.2f}')
         train_acc.append(100. * correct / processed)
 
-        if scheduler is not None:
-            scheduler.step(train_losses[-1])
+        # if scheduler is not None:
+        #     scheduler.step(train_losses[-1])
+
+        if isinstance(scheduler, torch.optim.lr_scheduler.OneCycleLR):
+                scheduler.step() # OneCycleLR after every batch
+                
+    if isinstance(scheduler, torch.optim.lr_scheduler.StepLR):
+        scheduler.step()
+
+    print("\nLR from scheduler:", scheduler.get_last_lr())
 
     # return train_acc, train_losses
         
