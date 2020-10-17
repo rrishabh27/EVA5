@@ -13,7 +13,7 @@ import torch
 import torch.nn.functional as F
 from torchvision import models, transforms
 
-from grad_cam import (GradCAM)
+from gradcam.grad_cam import (GradCAM)
 
 sns.set()
 

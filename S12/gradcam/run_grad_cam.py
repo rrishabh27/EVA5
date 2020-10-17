@@ -3,10 +3,8 @@ import torch.nn as nn
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-import get_grad_cam
+from gradcam import get_grad_cam
 
-import sys
-sys.path.append(".")
 # from data_loading import transform as dt
 # from utils import misclassifications
 
