@@ -1,7 +1,7 @@
-from __future__ import print_function
-
 import torch
 import torch.functional as F
+
+from __future__ import print_function
 
 from tqdm import tqdm
 
@@ -24,8 +24,9 @@ def test(net, device, test_loader, test_acc, test_losses):
         for batch_idx, (data, target) in enumerate(pbar, 0):
             data, target = data.to(device), target.to(device)
             output = net(data)
-            loss = loss_functions.cross_entropy_loss()
-            test_loss += loss(output, target)
+            criterion = loss_functions.cross_entropy_loss()
+            loss = criterion(output, target)
+            test_loss += loss
             pred = output.argmax(dim=1, keepdim = True) # get the index of the max log-probability
             correct += pred.eq(target.view_as(pred)).sum().item()
 
