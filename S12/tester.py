@@ -1,7 +1,7 @@
+from __future__ import print_function
+
 import torch
 import torch.functional as F
-
-from __future__ import print_function
 
 from tqdm import tqdm
 
