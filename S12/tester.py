@@ -19,6 +19,7 @@ def test(net, device, test_loader, test_acc, test_losses):
     pbar = tqdm(test_loader)
     test_loss = 0
     correct = 0
+    processed = 0
     with torch.no_grad(): # since we do not want to compute gradients on the test data, we use torch.no_grad()
         for batch_idx, (data, target) in enumerate(pbar, 0):
             data, target = data.to(device), target.to(device)
