@@ -1,4 +1,4 @@
-# Session 10
+# Session 11
 
 Previously in [S10](https://github.com/rishabh-bhardwaj-64rr/EVA5/tree/master/S10), we trained ResNet18 on CIFAR-10 dataset by using [lr_finder](https://github.com/davidtvs/pytorch-lr-finder) for SGD with momentum and also [`ReduceLROnPlateau`] (https://pytorch.org/docs/stable/optim.html#torch.optim.lr_scheduler.ReduceLROnPlateau) to reach > 88% accuracy
 
@@ -23,8 +23,46 @@ So why use One Cycle Policy?
 * It reduces the cost of training. 
 
 * It reduces the time to deploy!
+
+---
+**Network architecture**
+
+PrepLayer - Conv 3x3 s1, p1) >> BN >> RELU [64k]
+
+**Layer1 -**
+
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X = Conv 3x3 (s1, p1) >> MaxPool2D >> BN >> RELU [128k]
+ 
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;R1 = ResBlock( (Conv-BN-ReLU-Conv-BN-ReLU))(X) [128k] 
+ 
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add(X, R1)
+ 
+**Layer 2 -**
+
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Conv 3x3 [256k]
+ 
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MaxPooling2D
+ 
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BN
+ 
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ReLU
+ 
+**Layer 3 -**
+
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X = Conv 3x3 (s1, p1) >> MaxPool2D >> BN >> RELU [512k]
+ 
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;R2 = ResBlock( (Conv-BN-ReLU-Conv-BN-ReLU))(X) [512k]
+ 
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add(X, R2)
  
 
+MaxPooling with Kernel Size 4
+
+FC Layer
+
+SoftMax
+
+* Number of parameters = 6,573,120
 
 ---
 
