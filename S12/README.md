@@ -1,72 +1,28 @@
-# Session 10
+# Session 12
 
-Previously in [S9](https://github.com/rishabh-bhardwaj-64rr/EVA5/tree/master/S9), we trained ResNet18 on CIFAR-10 dataset and used albumentations(https://github.com/albumentations-team/albumentations) library. We reached > 87% accuracy under 25 epochs in that code.
-
-In this code, our objective was to reach > 88% validation accuracy by using [lr_finder](https://github.com/davidtvs/pytorch-lr-finder) code for SGD with momentum and also [`ReduceLROnPlateau`] (https://pytorch.org/docs/stable/optim.html#torch.optim.lr_scheduler.ReduceLROnPlateau).
+In this code, our objective was to reach > 50% validation accuracy on [Tiny ImageNet](https://tiny-imagenet.herokuapp.com/) having 70/30 split using ResNet-18 model. It has 200 classes and is a difficult dataset to train on. One can achieve great accuracy while training but it is very diffcult to get > 60% validation accuracy on this dataset.
 
 
-On top of that, we used [Grad-CAM](http://gradcam.cloudcv.org/) on the misclassified images to highlight the regions in the image which are important for the prediction of the models.
-The highlighted region marks the pixels areas which the DNN thinks to be most useful. Unlike CAM, Grad-CAM requires no re-training and is broadly applicable to any 
-CNN-based architecture.
+Other part of code deals with preliminary task for object detection using YOLO. We built a custom dataset by collecting the images of people wearing hardhat, vest, mask and boots (atleast 50 classes each) and annotating them. We used [this](http://www.robots.ox.ac.uk/~vgg/software/via/via_demo.html) tool to annotate bounding boxes around the hardhat, vest, mask and boots. Further, we calculated the appropriate number of clusters (or number of anchor boxes) for the dataset for training YOLO network using k-means clustering applied on contents of the JSON file we got after annotation. 
 
 ---
 
-We trained the model for 50 epochs and achieved:
-* Highest train accuracy: 96.42%
-* Highest test accuracy: 91.65%
+For the first taks, we trained the model for 50 epochs and achieved:
+* Highest train accuracy: 97.32%
+* Highest test accuracy: 55.72% (HEAVY OVERFITTING)
 
----
+We also used `OneCycleLR` with the learning rate being maximum (= 0.05) at 6th epoch. It helped the model quickly reach 42.65% accuracy in 12 epochs.
 
-**lr-finder output**
-![lr-finder output](https://github.com/rishabh-bhardwaj-64rr/EVA5/blob/master/S10/images/lr_finder%20plot.png)
-
-```
-optimizer = optim.SGD(net.parameters(), lr=1e-7,  momentum=0.9)
-criterion = nn.CrossEntropyLoss()
-
-lr_finder = LRFinder(net, optimizer, criterion, device="cuda")
-lr_finder.range_test(train_loader, end_lr=1, num_iter=100)
-
-lr_finder.plot() # loss vs lr curve
-
-lr_finder.reset()
-
-```
-* Suggested learning rate: 1.23E-02
+For the second task, the appropriate number of clusters found were 4 using elbow method.
 
 ---
 
 **Parameters and Hyperparameters**
 
 * Loss function : Cross Entropy Loss
-* Optimizer : `SGD(learning_rate = 1.23E-02, momentum = 0.9)`
-* Scheduler : `ReduceLROnPlateau(optimizer, patience = 3)`
-* Batch Size : 128
+* Optimizer : `SGD(net.parameters(), lr = 0.01, momentum = 0.9)`
+* Scheduler : `OneCycleLR(optimizer, max_lr=0.05, epochs=50, steps_per_epoch=len(train_loader), pct_start=6/50,anneal_strategy='cos', div_factor=10, final_div_factor=1)`
+* Batch Size : 512
 * Epochs : 50
----
-
-**Classwise Accuracy**
-
-* Accuracy of plane : 89 %
-* Accuracy of   car : 97 %
-* Accuracy of  bird : 80 %
-* Accuracy of   cat : 88 %
-* Accuracy of  deer : 81 %
-* Accuracy of   dog : 82 %
-* Accuracy of  frog : 100 %
-* Accuracy of horse : 91 %
-* Accuracy of  ship : 97 %
-* Accuracy of truck : 100 %
----
-
-**Grad-CAM on misclassified images for the all the layers of ResNet18**
-
-![gradcam_output](https://github.com/rishabh-bhardwaj-64rr/EVA5/blob/master/S10/images/gradcam_misclassifications_5.png)
 
 ---
-## Group Members
-
-Rishabh Bhardwaj
-
-Rashu Tyagi
-
