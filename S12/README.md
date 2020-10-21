@@ -7,7 +7,7 @@ Other part of code deals with preliminary task for object detection using YOLO. 
 
 ---
 
-For the first taks, we trained the model for 50 epochs and achieved:
+For the first task, we trained the model for 50 epochs and achieved:
 * Highest train accuracy: 97.32%
 * Highest test accuracy: 55.72% (HEAVY OVERFITTING)
 
@@ -25,4 +25,4 @@ For the second task, the appropriate number of clusters found were 4 using elbow
 * Batch Size : 512
 * Epochs : 50
 
----
+
