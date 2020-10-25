@@ -1,0 +1,37 @@
+JSON FILE SECTION:
+
+"_via_img_metadata": {
+        "1.jpg13298": {
+            "filename": "1.jpg",
+            "size": 13298,
+            "regions": [
+                {
+                    "shape_attributes": {
+                        "name": "rect",
+                        "x": 86,
+                        "y": 29,
+                        "width": 28,
+                        "height": 22
+                    },
+                    "region_attributes": {
+                        "class": "hardhat"
+                    }
+                }
+
+
+JSON (JavaScript Object Notation) is an open standard file format, and data interchange format, that uses human-readable text to store and transmit data objects consisting of attribute–value pairs and array data types.
+Our JSON file which consists of annotated images will be used in Object Detection using YOLO.
+
+1. "size" represents size of the image in bytes
+2. "regions" denotes the number of properties of regions in the annotated image. In our case, we have two attributes: 
+	"shape_attributes"
+	"region_attributes"
+
+3. "shape_attributes": It lists the properties of the bounding box.
+	"name" denotes the name of the bounding box (rectangle in our case)
+	"x" and "y" denote the coordinates of the top left corner of the bbox
+	"width" and "height" denote the width and height of the bbox respectively
+	
+4. "region_attributes": It tells us the properties of the bounding box.
+	"class" denotes the labelled class of the object inside the bbox (hardhat in our case)
+	

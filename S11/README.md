@@ -1,72 +1,129 @@
-# Session 10
+# Session 11
 
-Previously in [S9](https://github.com/rishabh-bhardwaj-64rr/EVA5/tree/master/S9), we trained ResNet18 on CIFAR-10 dataset and used albumentations(https://github.com/albumentations-team/albumentations) library. We reached > 87% accuracy under 25 epochs in that code.
+Previously in [S10](https://github.com/rishabh-bhardwaj-64rr/EVA5/tree/master/S10), we trained ResNet18 on CIFAR-10 dataset by using [lr_finder](https://github.com/davidtvs/pytorch-lr-finder) for SGD with momentum and also [`ReduceLROnPlateau`] (https://pytorch.org/docs/stable/optim.html#torch.optim.lr_scheduler.ReduceLROnPlateau) to reach > 88% accuracy
 
-In this code, our objective was to reach > 88% validation accuracy by using [lr_finder](https://github.com/davidtvs/pytorch-lr-finder) code for SGD with momentum and also [`ReduceLROnPlateau`] (https://pytorch.org/docs/stable/optim.html#torch.optim.lr_scheduler.ReduceLROnPlateau).
+In this code, we are going one step further. Our objective was to reach > 90% validation accuracy by implementing a custom network [(DavidNet)](https://medium.com/fenwicks/tutorial-2-94-accuracy-on-cifar10-in-2-minutes-7b5aaecd9cdd) and using [SuperConvergence](https://arxiv.org/abs/1708.07120) and [OneCycleLR](https://arxiv.org/abs/1803.09820). The author of these papers, Leslie Smith describes the approach to set hyper-parameters (namely learning rate, momentum and weight decay) and batch size. In particular, he suggests One Cycle policy to apply learning rates.
 
+In this method of training, one cycle means that we first go from low learning rate to some high learning rate (typically, highest_lr/lowest_lr >= 5) in just a few epochs(5 - 10 epochs typically). Then we go down from highest learning rate to the lowest learning rate in the same number of epochs. We may then choose to annihilate the learning rate further after this cycle completes to way below the lower learning rate value(1/10 th or 1/100 th).
 
-On top of that, we used [Grad-CAM](http://gradcam.cloudcv.org/) on the misclassified images to highlight the regions in the image which are important for the prediction of the models.
-The highlighted region marks the pixels areas which the DNN thinks to be most useful. Unlike CAM, Grad-CAM requires no re-training and is broadly applicable to any 
-CNN-based architecture.
+The motivation behind this is that, during the middle of learning when the learning rate is higher, the learning rate
+works as a regularisation method and keep the network from overfitting. This helps the network to avoid steep areas
+of loss and land better flatter minima. The accuracy increases dramatically during the first half of cycle when the lr increases.
+
+But does it provide us higher accuracy after training in practice? NO
+
+So why use One Cycle Policy?
+
+* It reduces the time it takes to reach "near" to your accuracy. 
+
+* It allows us to know if we are going right early on. 
+
+* It let us know what kind of accuracies we can target with a given model.
+
+* It reduces the cost of training. 
+
+* It reduces the time to deploy!
+
+---
+**Network architecture**
+
+PrepLayer - Conv 3x3 s1, p1) >> BN >> RELU [64k]
+
+**Layer1 -**
+
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X = Conv 3x3 (s1, p1) >> MaxPool2D >> BN >> RELU [128k]
+ 
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;R1 = ResBlock( (Conv-BN-ReLU-Conv-BN-ReLU))(X) [128k] 
+ 
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add(X, R1)
+ 
+**Layer 2 -**
+
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Conv 3x3 [256k]
+ 
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MaxPooling2D
+ 
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BN
+ 
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ReLU
+ 
+**Layer 3 -**
+
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X = Conv 3x3 (s1, p1) >> MaxPool2D >> BN >> RELU [512k]
+ 
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;R2 = ResBlock( (Conv-BN-ReLU-Conv-BN-ReLU))(X) [512k]
+ 
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add(X, R2)
+ 
+
+MaxPooling with Kernel Size 4
+
+FC Layer
+
+SoftMax
+
+* Number of parameters = 6,573,120
 
 ---
 
-We trained the model for 50 epochs and achieved:
-* Highest train accuracy: 96.42%
-* Highest test accuracy: 91.65%
+We trained the model for 25 epochs and at the 5th epoch, the learning rate was maximum so the cycle was of 10 epochs. The output metrics were:
+* Highest train accuracy: 96.80%
+* Highest test accuracy: 90.76%
+* Test accuracy after 5th epoch = 71.25%
 
 ---
 
 **lr-finder output**
-![lr-finder output](https://github.com/rishabh-bhardwaj-64rr/EVA5/blob/master/S10/images/lr_finder%20plot.png)
+
+We also used lr-finder to find the maximum learning rate for training
 
 ```
-optimizer = optim.SGD(net.parameters(), lr=1e-7,  momentum=0.9)
+optimizer = optim.SGD(net.parameters(), lr=0.01,  momentum=0.9)
 criterion = nn.CrossEntropyLoss()
 
 lr_finder = LRFinder(net, optimizer, criterion, device="cuda")
-lr_finder.range_test(train_loader, end_lr=1, num_iter=100)
+lr_finder.range_test(train_loader, start_lr=1e-3, end_lr=0.1, num_iter=400, step_mode='linear')
 
 lr_finder.plot() # loss vs lr curve
+
+best_lr = lr_finder.history['lr'][lr_finder.history['loss'].index(lr_finder.best_loss)]
+print(best_lr)
 
 lr_finder.reset()
 
 ```
-* Suggested learning rate: 1.23E-02
-
+* Suggested LR: 5.71E-03 (the learning rate corresponding to maximum gradient in loss vs lr curve)
+* best_lr = 0.06600751879699249 (the learning rate corresponding to minimum loss after the range test completes)
 ---
 
 **Parameters and Hyperparameters**
 
-* Loss function : Cross Entropy Loss
-* Optimizer : `SGD(learning_rate = 1.23E-02, momentum = 0.9)`
-* Scheduler : `ReduceLROnPlateau(optimizer, patience = 3)`
-* Batch Size : 128
-* Epochs : 50
+```
+Batch size = 512
+EPOCHS = 25
+max_lr_epoch = 5
+optimizer = optim.SGD(net.parameters(), lr = 0.01, momentum = 0.9)
+pct_start = max_lr_epoch/EPOCHS
+scheduler = OneCycleLR(optimizer=optimizer, max_lr=best_lr, epochs=EPOCHS, steps_per_epoch=len(train_loader), pct_start=pct_start,anneal_strategy='linear', div_factor=200, final_div_factor=1)
+
+```
+
 ---
 
 **Classwise Accuracy**
 
-* Accuracy of plane : 89 %
-* Accuracy of   car : 97 %
+
+* Accuracy of plane : 100 %
+* Accuracy of   car : 100 %
 * Accuracy of  bird : 80 %
-* Accuracy of   cat : 88 %
-* Accuracy of  deer : 81 %
-* Accuracy of   dog : 82 %
-* Accuracy of  frog : 100 %
-* Accuracy of horse : 91 %
-* Accuracy of  ship : 97 %
+* Accuracy of   cat : 75 %
+* Accuracy of  deer : 85 %
+* Accuracy of   dog : 83 %
+* Accuracy of  frog : 84 %
+* Accuracy of horse : 87 %
+* Accuracy of  ship : 100 %
 * Accuracy of truck : 100 %
----
-
-**Grad-CAM on misclassified images for the all the layers of ResNet18**
-
-![gradcam_output](https://github.com/rishabh-bhardwaj-64rr/EVA5/blob/master/S10/images/gradcam_misclassifications_5.png)
 
 ---
-## Group Members
 
-Rishabh Bhardwaj
-
-Rashu Tyagi
 
