@@ -2,9 +2,6 @@
 ________
 YoloV3 Simplified for training on Colab with custom dataset. 
 
-_A Collage of Training images_
-![image](https://github.com/theschoolofai/YoloV3/blob/master/output/train.png)
-
 
 We have added a very 'smal' Coco sample imageset in the folder called smalcoco. This is to make sure you can run it without issues on Colab.
 
@@ -22,8 +19,7 @@ You'll need to download the weights from the original source.
 For custom dataset:
 1. Clone this repo: https://github.com/miki998/YoloV3_Annotation_Tool
 2. Follow the installation steps as mentioned in the repo. 
-3. For the assignment, download 500 images of your unique object. 
-4. Annotate the images using the Annotation tool. 
+3. Annotate the images using the Annotation tool. 
 ```
 data
   --customdata
@@ -55,24 +51,28 @@ data
 ```
 7. You need to add custom.names file as you can see above. For our example, we downloaded images of Walle. Our custom.names file look like this:
 ```
-walle
+hardhat
+vest
+mask
+boots
 ```
-8. Walle above will have a class index of 0. 
-9. For COCO's 80 classes, VOLOv3's output vector has 255 dimensions ( (4+1+80)*3). Now we have 1 class, so we would need to change it's architecture.
+8. hardhat, vest, mask, and boots above will have a class index of 0, 1, 2, and 3 respectively
+9. For COCO's 80 classes, VOLOv3's output vector has 255 dimensions ( (4+1+80)*3). Now we have 4 class, so we would need to change it's architecture( (4+1+4)*3).
 10. Copy the contents of 'yolov3-spp.cfg' file to a new file called 'yolov3-custom.cfg' file in the data/cfg folder. 
-11. Search for 'filters=255' (you should get entries entries). Change 255 to 18 = (4+1+1)*3
-12. Search for 'classes=80' and change all three entries to 'classes=1'
+11. Search for 'filters=255' (you should get entries entries). Change 255 to 27 = (4+4+1)*3
+12. Search for 'classes=80' and change all three entries to 'classes=4'
 13. Since you are lazy (probably), you'll be working with very few samples. In such a case it is a good idea to change:
   * burn_in to 100
   * max_batches to 5000
   * steps to 4000,4500
-14. Don't forget to perform the weight file steps mentioned in the sectio above. 
+14. Don't forget to perform the weight file steps mentioned in the section above. 
 15. Run this command `python train.py --data data/customdata/custom.data --batch 10 --cache --cfg cfg/yolov3-custom.cfg --epochs 3 --nosave`
-
-As you can see in the collage image above, a lot is going on, and if you are creating a set of say 500 images, you'd get a bonanza of images via default augmentations being performed. 
 
 
 **Results**
-After training for 300 Epochs, results look awesome!
+After training for 20 Epochs only, we inferenced on a video and the results look good!
 
-![image](https://github.com/theschoolofai/YoloV3/blob/master/output/download.jpeg)
+Video [link] (https://www.youtube.com/watch?v=ujaFVJ6dqNg&feature=youtu.be)
+
+But you would want to train for 300 Epochs for best results.
+
