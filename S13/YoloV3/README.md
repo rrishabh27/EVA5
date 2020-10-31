@@ -73,7 +73,7 @@ boots
 
 After training for 20 Epochs only, we made inference on a video and the results look good!
 
-Video [link](https://www.youtube.com/watch?v=ujaFVJ6dqNg&feature=youtu.be)
+Video [link](https://www.youtube.com/watch?v=ujaFVJ6dqNg&feature=youtu.be) (Full credits to the original [video](https://www.youtube.com/watch?v=AfCi84O4cAU) owners)
 
 But you would want to train for 300 Epochs for best results.
 
