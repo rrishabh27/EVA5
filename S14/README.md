@@ -15,11 +15,13 @@
 
 ---
 
-SO, we collected the dataset containing the images (3590 images) of people wearing hardhat, vest, mask, and boots and annotated them using [YoloV3_Annotation_Tool](https://github.com/miki998/YoloV3_Annotation_Tool).
+* SO, we collected the dataset containing the images (3590 images) of people wearing hardhat, vest, mask, and boots and annotated them using [YoloV3_Annotation_Tool](https://github.com/miki998/YoloV3_Annotation_Tool).
 The first link contains this dataset (images and the .txt files for each image's labels depicting the position of the bounding boxes drawn).
 
-NEXT, in order to get the inverse depth images, we made inference on [this](https://github.com/intel-isl/MiDaS) pretrained model on our collected dataset images.
+* NEXT, in order to get the inverse depth images, we made inference on [this](https://github.com/intel-isl/MiDaS) pretrained model on our collected dataset images.
 The second link contains the generated dataset images.
 
-FINALLY, we made inference on [this](https://github.com/NVlabs/planercnn) pretrained model which uses MaskRCNN to get the planar regions in an image. The output images are of size 640x480. 
+* FINALLY, we made inference on [this](https://github.com/NVlabs/planercnn) pretrained model which uses MaskRCNN to get the planar regions in an image. The output images are of size 640x480. 
 The third link contains the generated dataset images.
+
+Please note that the third model was trained with `cuda8.0 + gcc5+ torch 0.4.0`. After that change to `torch 0.4.1` and the execute `evaluate.py` in `NVlabs/planercnn`. Or just run the bash script `!bash planercnn_cuda.sh` on colab and it will take care of the dependencies and compiling the `nms` and `roi align` files in the `NVlabs/planercnn` folder.
