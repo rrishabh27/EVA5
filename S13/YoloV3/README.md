@@ -49,7 +49,7 @@ data
 ./data/customdata/images/img003.jpg
 ...
 ```
-7. You need to add custom.names file as you can see above. For our example, we downloaded images of Walle. Our custom.names file look like this:
+7. You need to add custom.names file as you can see above. For our example, we downloaded and annotated the images containing following objects. Our custom.names file look like this:
 ```
 hardhat
 vest
