@@ -1,4 +1,9 @@
+
+[![Python 3.6.9](https://img.shields.io/badge/python-3.6.9-blue.svg)](https://www.python.org/downloads/release/python-369/)
+![PyTorch 1.7.0](https://img.shields.io/badge/PyTorch-1.7.0-orange)
+
 # CAPSTONE PROJECT
+
 
 The project was to make a network that can do two tasks simultaneously.
 
@@ -8,7 +13,22 @@ The project was to make a network that can do two tasks simultaneously.
 
 ## YOLOV3
 
+* The “You Only Look Once,” or YOLO, family of models are a series of end-to-end deep learning models designed for fast object detection.
+
+* The [YOLOV3 implementation](https://github.com/ultralytics/yolov3) uses DarkNet-53 as its encoder.
+
+* For an image size of 448x448, YOLOV3 makes predictions at 56x56, 28x28, and 14x14 at strides of 8, 16, and 32 respectively.
+
+* The network predicts the bounding boxes and filters them using NMS (Non-Max Suppression).
+
 ## MiDaS
+
+* This network predicts the depth from a single image.
+
+* It uses pretrained ResNext-101 32x8d as its encoder.
+
+* [Original impl](https://github.com/intel-isl/MiDaS).
+
 
 ## Dataset
 
@@ -26,7 +46,7 @@ Both of them use encoder-decoder architectures to output the images.
 
 * YOLOV3 architecture uses Darknet-53 as its encoder and MiDaS uses ResNext-101 as its encoder.
 
-* We know that to get a really good output, we need an encoder-decoder architecture.
+* We know that to get a really good output, we need an encoder-decoder architecture. 
 
 * So, the first step was to combine both these networks using one encoder only. I chose the MiDaS encoder and removed the Darknet-53 part of YOLOV3.
   This seemingly easy task took some time to function smoothly.
@@ -514,6 +534,8 @@ Total params: 135,353,938
 !python train.py  --data data/customdata/custom.data --batch batch_size --resume --depth 0 --yolo 1 --cache --cfg cfg/yolov3-custom.cfg --epochs number_of_epochs --img-size image_size --weights='/content/gdrive/MyDrive/S15_NEW/yolov3/weights/mega_model_weights.pt'
 ```
 
+* Model [weights](https://drive.google.com/file/d/1xVb3tmSEb85Z6CFExc-nyXJwNvph-ixS/view?usp=sharing)
+
 * So I trained on image resolution of 64 with batch size of 512 for 300 epochs. The total number of training images were 3186/3590.
 
 * Then I trained on resolution of 128 with batch size of 128 for 100 epochs. Then again I jumped to resolution of 256 with batch size of 32 for 50 epochs.
@@ -528,32 +550,32 @@ Total params: 135,353,938
 
 * I also added more training options in the `train.py` file.
 
-* Refer to (.ipynb file)[link to file] for more details.
+* Refer to (notebook)[https://github.com/rishabh-bhardwaj-64rr/EVA5/blob/master/S15%20Capstone/S15%20Capstone.ipynb] for more details.
 
 
 ### Data Augmentation
 >
 > - I used the original YOLOV3 data augmentation techniques for train dataset (random_affine(rotation=1.98, translate=0.05, scale=0.05, shear=0.641), flip-lr(p=0.5, hsv_augment(hue gain=0.0138, saturation gain=0.678, value=0.36)).
 >
-> - This can be found (yolo/utils/dataset)[].
 
 ### Loss Functions
 
+> YOLO Loss function
+![yolo loss function](https://github.com/rishabh-bhardwaj-64rr/EVA5/blob/master/S15%20Capstone/images/output_midas/yolo_loss_function.png)
+
 >  **BCEWithLogitsLoss**
 >
->  - YOLOV3's loss function consists of 5 different loss functions and categorically 3 losses (objectness loss, classification loss, and IoU loss (Intersection over Union)). The objectness and classification losses use BCEWithLogitsLoss. 
-
-> link to yolo loss function explanation, image
+>  - YOLOV3's loss function consists of 5 different loss functions and categorically 3 losses (objectness loss, classification loss, and IoU loss (Intersection over Union)). The objectness and classification losses use BCEWithLogitsLoss.
 >
 > - The total loss of YOLOV3 is the summation of obj, cls, and GIoU losses.
 >
->  - link to yolo/utils/compute_loss
+>  [loss function](https://github.com/rishabh-bhardwaj-64rr/EVA5/blob/master/S15%20Capstone/yolo/utils/utils.py)
 
 >  **SSIM Loss**
 >
 >  - The Structural SIMilarity (SSIM) index is a method for measuring the similarity between two images. The SSIM index can be viewed as a quality measure of one of the images being compared, provided the other image is regarded as of perfect quality.
 >
->  - This loss function is used when unfreezing the encoder part to allow the gradients to flow back through the encoder. Since this will affect the prediction of the depth images, it is necessary to keep a check on the prediction of depth images. The ground truth images were the images from the (link to Session 14 depth images).
+>  - This loss function is used when unfreezing the encoder part to allow the gradients to flow back through the encoder. Since this will affect the prediction of the depth images, it is necessary to keep a check on the prediction of depth images. The ground truth images were the images from Session 14's [output](https://drive.google.com/drive/u/1/folders/1-You-2HCcGG-flToigmKVv0C72NLXeYU).
 
 
 >  **MSE Loss**
@@ -561,6 +583,7 @@ Total params: 135,353,938
 > - The Mean Squared Error (MSE), also called L2 Loss, computes the average of the squared differences between actual values and predicted pixel values. 
 
 >  `total_loss = lambda_yolo * yolo_loss + lambda_depth * (lambda_ssim * ssim_loss + lambda_mse * mse_loss)`
+
 >  These lambdas control the weightage given to each loss so as to ensure some kind of parity amongst all the loss values.
 
 
@@ -590,7 +613,6 @@ Hyperparameters:
 
 ## Testing and Results
 
-* link the original outputs from original models
 
 * To test the output of YOLOV3, I just ran the `detect.py` file in the YOLOV3 folder.
 
