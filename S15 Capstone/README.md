@@ -41,7 +41,7 @@ The project was to make a network that can do two tasks simultaneously.
 
 ## Basic Approach
 
-* In [Session 13]()https://github.com/rishabh-bhardwaj-64rr/EVA5/tree/master/S13 and [Session 14](https://github.com/rishabh-bhardwaj-64rr/EVA5/tree/master/S14), we used the YOLOV3 network for object detection and the MiDaS network for depth prediction respectively on the same dataset (boots, vest, hardhat, and mask dataset).
+* In [Session 13](https://github.com/rishabh-bhardwaj-64rr/EVA5/tree/master/S13) and [Session 14](https://github.com/rishabh-bhardwaj-64rr/EVA5/tree/master/S14), we used the YOLOV3 network for object detection and the MiDaS network for depth prediction respectively on the same dataset (boots, vest, hardhat, and mask dataset).
 Both of them use encoder-decoder architectures to output the images.
 
 * YOLOV3 architecture uses Darknet-53 as its encoder and MiDaS uses ResNext-101 as its encoder.
