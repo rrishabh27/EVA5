@@ -46,7 +46,7 @@ Both of these use encoder-decoder architectures to output the images.
 
 #### Architecture
 
-![model](https://github.com/rishabh-bhardwaj-64rr/experiments_EVA5_Phase1/blob/master/Session%2015%20Capstone/images/capstone3.png)
+![model](https://github.com/rishabh-bhardwaj-64rr/EVA5/blob/master/S15%20Capstone/images/capstone3.png)
 
 
 #### Summary
@@ -572,21 +572,21 @@ Hyperparameters:
 
 * I tested on the same dataset with image size of 512 and got some decent results. I got **mAP = 0.308** as the highest.
 
-![results](https://github.com/rishabh-bhardwaj-64rr/experiments_EVA5_Phase1/blob/master/Session%2015%20Capstone/yolo/results.png)
+![results](https://github.com/rishabh-bhardwaj-64rr/EVA5/blob/master/S15%20Capstone/yolo/results.png)
 
 * BBOX Outputs
 
-![E92](https://github.com/rishabh-bhardwaj-64rr/experiments_EVA5_Phase1/blob/master/Session%2015%20Capstone/images/output_yolo/E92.jpg)
-![E88](https://github.com/rishabh-bhardwaj-64rr/experiments_EVA5_Phase1/blob/master/Session%2015%20Capstone/images/output_yolo/E88.jpg)
-![GImage_94](https://github.com/rishabh-bhardwaj-64rr/experiments_EVA5_Phase1/blob/master/Session%2015%20Capstone/images/output_yolo/Gimage_94.jpg)
+![E92](https://github.com/rishabh-bhardwaj-64rr/EVA5/blob/master/S15%20Capstone/images/output_yolo/E92.jpg)
+![E88](https://github.com/rishabh-bhardwaj-64rr/EVA5/blob/master/S15%20Capstone/images/output_yolo/E88.jpg)
+![GImage_94](https://github.com/rishabh-bhardwaj-64rr/EVA5/blob/master/S15%20Capstone/images/output_yolo/Gimage_94.jpg)
 
 * To test the output of MiDaS, I ran the `run.py` file in the midas folder and it achieved good results.
 
 * Depth Outputs
 
-![1](https://github.com/rishabh-bhardwaj-64rr/experiments_EVA5_Phase1/blob/master/Session%2015%20Capstone/images/output_midas/0b59d3bd16%20(1).png)
-![2](https://github.com/rishabh-bhardwaj-64rr/experiments_EVA5_Phase1/blob/master/Session%2015%20Capstone/images/output_midas/2.png)
-![3](https://github.com/rishabh-bhardwaj-64rr/experiments_EVA5_Phase1/blob/master/Session%2015%20Capstone/images/output_midas/_112919912_gettyimages-1220030093%20(1).png)
+![1](https://github.com/rishabh-bhardwaj-64rr/EVA5/blob/master/S15%20Capstone/images/output_midas/0b59d3bd16%20(1).png)
+![2](https://github.com/rishabh-bhardwaj-64rr/EVA5/blob/master/S15%20Capstone/images/output_midas/2.png)
+![3](https://github.com/rishabh-bhardwaj-64rr/EVA5/blob/master/S15%20Capstone/images/output_midas/_112919912_gettyimages-1220030093%20(1).png)
 
 
 ## Code Structure
