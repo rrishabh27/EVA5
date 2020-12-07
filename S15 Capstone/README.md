@@ -561,7 +561,7 @@ Total params: 135,353,938
 ### Loss Functions
 
 > YOLO Loss function
-![yolo loss function](https://github.com/rishabh-bhardwaj-64rr/EVA5/blob/master/S15%20Capstone/images/output_midas/yolo_loss_function.png)
+![yolo loss function](https://github.com/rishabh-bhardwaj-64rr/EVA5/blob/master/S15%20Capstone/images/yolo_loss_function.png)
 
 >  **BCEWithLogitsLoss**
 >
