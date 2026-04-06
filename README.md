@@ -1,2 +1,2 @@
 # EVA5
-TSAI
+Repo containing assignment submissions for TSAI sessions
